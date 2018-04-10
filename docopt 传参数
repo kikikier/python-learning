@@ -1,0 +1,71 @@
+终端输入如下命令，进入代码编辑
+$ vim test.py python3
+
+  1 """test
+  2  
+  3 Usage:
+  4   test.py [-dg] <from> <to> <date>
+  5   test.py (-h | --help)
+  6   test.py --version
+  7  
+  8 Options:
+  9   -h --help     Show this screen.
+ 10   --version     Show version.
+ 11   -g            gaotie
+ 12   -d            dongche
+ 13  
+ 14 """
+ 15 from docopt import docopt
+ 16 
+ 17 if __name__ == '__main__':
+ 18     arguments = docopt(__doc__, version='test 1.0')
+ 19     print(arguments)
+~                           
+
+
+／／输入-可以提示入参
+$ python3 test.py -     
+Usage:
+  test.py [-dg] <from> <to> <date>
+  test.py (-h | --help)
+  test.py --version
+  
+／／输入-h提示help信息
+$ python3 test.py -h
+test
+ 
+Usage:
+  test.py [-dg] <from> <to> <date>
+  test.py (-h | --help)
+  test.py --version
+ 
+Options:
+  -h --help     Show this screen.
+  --version     Show version.
+  -g            gaotie
+  -d            dongche
+
+／／输入--version提示版本信息，支持简写
+$ python3 test.py --ver
+test 1.0
+weitingdeMacBook-Pro:ticketshy weitingzhang$ python3 test.py 北京 深圳 
+Usage:
+  test.py [-dg] <from> <to> <date>
+  test.py (-h | --help)
+  test.py --version
+
+／／入参全部输入正确，显示字典
+$ python3 test.py 北京 深圳 2018-04-01
+{'--help': False,
+ '--version': False,
+ '-d': False,
+ '-g': False,
+ '<date>': '2018-04-01',
+ '<from>': '北京',
+ '<to>': '深圳'}
+
+
+
+
+
+
