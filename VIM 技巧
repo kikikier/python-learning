@@ -41,5 +41,6 @@ syntax on
 即设置好了（1）显示行数（2）desert配色方案（3）语法高亮 功能，关闭终端重新打开即可生效，并 永久生效，无需每次进入vim再设置。
 
 
-
+将 parse_station.py 运行的结果输出重定向到 stations.py 文件
+$ python3 parse_station.py >> stations.py
 
