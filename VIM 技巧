@@ -1,0 +1,45 @@
+mac--终端
+
+
+mkdir  ticketshy  //创建文件夹
+vim tickets1.py   //创建.py文件并进入编辑
+正常模式下 i进入 insert模式也就是编辑模式
+esc按键推出insert模式，可以进行vim的一些操作
+:w !python3     //用python3运行当前文件
+:wq             //保存当前文件
+:q!             //退出当前文件编辑，退回到终端
+
+
+
+终端下运行某py程序：
+xxMacBook-Pro:~ xx$ cd ~/
+xxMacBook-Pro:~ xx$ cd ticketshy/
+xxMacBook-Pro:ticketshy xx$ ls
+__pycache__		parse_station.py	stations.py
+new2			python			tickets1.py
+xxdeMacBook-Pro:ticketshy xx$ vim parse_station.py python3
+
+
+vim配色等个性化设置：
+$ ls /usr/share/vim/vim74/colors
+README.txt	delek.vim	industry.vim	pablo.vim	slate.vim
+blue.vim	desert.vim	koehler.vim	peachpuff.vim	torte.vim
+darkblue.vim	elflord.vim	morning.vim	ron.vim		zellner.vim
+default.vim	evening.vim	murphy.vim	shine.vim
+
+查看是否有想要的某些配色，所有配色均是以.vim结束的，如果有的话，再输入：
+$ cd ~/
+到用户主目录，然后输入
+
+$ vim .vimrc
+创建配置文件，将vim的内容设置如下：
+
+set nu 
+colorscheme desert 
+syntax on
+
+即设置好了（1）显示行数（2）desert配色方案（3）语法高亮 功能，关闭终端重新打开即可生效，并 永久生效，无需每次进入vim再设置。
+
+
+
+
