@@ -1,0 +1,61 @@
+
+  1 # -*- coding: utf-8 -*-
+  2 # ver 4.10 22:01
+  3 
+  4 import re
+  5 import requests
+  6 from pprint import pprint
+  7 
+  8 def main():
+  9    url = 'https://kyfw.12306.cn/otn/resources/js/framework/station_name.js?s    tation_version=1.9050'
+ 10    r = requests.get(url, verify=False)
+ 11    pattern =u'([\u4e00-\u9fa5]+)\|([A-Z]+)'
+ 12    stations = dict(re.findall(pattern, r.text))
+ 13    pprint(stations, indent=4)
+ 14 #   print(stations.keys())
+ 15 #   print(stations.values())
+ 16 
+ 17 
+ 18 if __name__ =='__main__':
+ 19    main()
+~    
+
+环境：
+mac自带VIM 下运行，自带的python2.7最好不要删除，以免系统还有调用python2.7的库的。所以当前是python 2 和3共存的。
+运行的时候要经常注意 python 会默认python2 运行，只有打python3 才会以python3.6运行。
+Python 3.6.0 (v3.6.0:41df79263a11, Dec 22 2016, 17:23:13) 
+[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>> 
+
+
+
+走过的坑：
+1.python2.7 关于编码解码的部分非常恶心，最好是升级到python 3，已经解决了中文字符和ascii 的编解码bug。
+
+2.requests 是关于网站的库，获取 url 非常好用。
+url = 'https://kyfw.12306.cn/otn/resources/js/framework/station_name.js?s    tation_version=1.9050'
+r = requests.get(url, verify=False)
+
+3.脚本里默认是 unicode 编码，要输出中文的话前面需要加 u'xxxxxx'
+pattern =u'([\u4e00-\u9fa5]+)\|([A-Z]+)'
+
+中文字符集： \u4e00-\u9fa5
+大写英文字符集：A-Z
+小写英文字符集：a-z
+
+4.pprint可以输出的更优美
+from pprint import pprint
+pprint(stations, indent=4)  //indent是缩进格数，效果如下
+
+    '龙洞堡': 'FVW',
+    '龙游': 'LMH',
+    '龙爪沟': 'LZT',
+    '龙里': 'LLW',
+    '龙里北': 'KFW',
+    '龙镇': 'LZA',
+    '龙骨甸': 'LGM'}
+
+
+
+
