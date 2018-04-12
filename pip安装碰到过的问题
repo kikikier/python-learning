@@ -1,0 +1,23 @@
+1.  cmd 打开终端输入
+which python
+显示 python安装的路径
+cd 进入
+python3 要在安装的绝对路径下进行pip
+
+2. 还是pip不了第三方库，可能是公司代理受限的原因。
+公司内部有封装的镜像
+找一个确定能访问镜像网站
+
+3. 在用户路径下添加一个pip文件夹，进入pip文件夹
+C:\Users\X00xxxxxxx\pip
+添加一个pip.ini 文件，打开编辑，输入以下配置，保存。
+[global]
+index-url = http://rnd-mirrors.XX公司.com/pypi/simple/
+[install]
+trusted-host=rnd-mirrors.XX公司.com
+
+4. 在路径下指定源pip 即可
+ pip install Flask -i http://rnd-mirrors.XX公司.com/pypi/simple/ --trusted-host rnd-mirrors.XX公司.com 
+
+5.  import requests 不报错则说明 第三方库 requests安装成功了。
+其他第三方库同理。
