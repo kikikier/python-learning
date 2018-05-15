@@ -1,0 +1,28 @@
+
+
+import selenium
+from selenium import webdriver
+import time
+
+def web_login(user, password):
+    driver = webdriver.Chrome()
+    driver.get('https://login.xxxxxxxxx/login/')
+    driver.find_element_by_name('uid').send_keys(user)
+    driver.find_element_by_name('password').send_keys(password)
+    driver.find_element_by_name('Submit').click()
+    time.sleep(10)  //停留10s，便于观察到现象
+    driver.quit()
+if __name__=='__main__':
+    web_login('xxxxx', 'xxxxxxxx')
+
+走过的坑：
+1.浏览器版本与驱动版本需匹配，以chrome为例，对照关系如下：
+chromedriver版本	支持的Chrome版本
+v2.37	v64-66
+v2.36	v63-65
+谷歌浏览器web驱动下载地址： 
+http://chromedriver.storage.googleapis.com/index.html?path=2.37/ 
+
+2.驱动下载好后，解压到浏览器的安装路径，并将该路径添加到环境变量里，否则会报错。
+
+3.pycharm 修改pip源，最好把老的源删掉，不然pip好久都下载不下来Selenium  = =！
