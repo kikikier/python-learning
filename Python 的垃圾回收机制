@@ -1,0 +1,100 @@
+1.引用计数器回收：
+一个对象，会记录着自身被引用的个数
+每增加一个引用，这个对象的引用计数会自动+1
+每减少一个引用，这个对象的引用计数会自动-1
+
+查看引用计数
+import sys sys.getrefcount(对象)
+
+关于getrefcount：
+getrefcount(object) -> integer
+Return the reference count of object. The count returned is generally
+one higher than you might expect, because it includes the (temporary)
+reference as an argument to getrefcount().
+1. 需要获取一个对象的引用次数，而非一个类
+2. 由于你通过getrefcount引用了这个对象，所以总引用次数要比实际多1
+
+>>> import sys
+>>> 
+>>> class Uranus:
+	pass
+
+>>> u1 = Uranus()   
+>>> print(sys.getrefcount(u1)-1)  --对象被创建，计数1次
+1
+>>> u3 = u2 = u1
+>>> print(sys.getrefcount(u1)-1)  --对象被引用，计数+1
+3
+>>> del u3
+>>> print(sys.getrefcount(u1)-1)
+2
+>>> del u2
+>>> print(sys.getrefcount(u1)-1)
+1
+>>> del u1   --对象被销毁，计数-1
+>>> print(sys.getrefcount(u1)-1)
+Traceback (most recent call last):
+  File "<pyshell#189>", line 1, in <module>
+    print(sys.getrefcount(u1)-1)
+NameError: name 'u1' is not defined
+>>> 
+>>> 
+>>> u1 = Uranus()
+>>> def func(ojb):
+	print(sys.getrefcount(ojb)-1)
+>>> func(u1)  ---对象作为参数传入到一个函数中会 +2
+3
+
+
+2.特殊场景-循环引用问题
+>>> import objgraph
+>>> class Person:
+	pass
+
+>>> class Animal:
+	pass
+
+>>> print(objgraph.count('Person'))
+0
+>>> print(objgraph.count('Animal'))
+0
+>>> P = Person()
+>>> A = Animal()
+>>> 
+>>> print(objgraph.count('Person'))
+1
+>>> print(objgraph.count('Animal'))
+1
+>>> P.pet = A
+>>> A.master = P
+>>> 
+>>> print(objgraph.count('Person'))
+1
+>>> print(objgraph.count('Animal'))
+1
+>>> 
+>>> del P
+>>> del A
+>>> # 正常情况下，如果删除了P和A，应该为0，但由于循环引用，结果为1
+>>> print(objgraph.count('Person'))
+1
+>>> print(objgraph.count('Animal'))
+1
+
+
+3.分代回收
+从经历过引用计数器机制仍未被释放掉的对象中，找到循环引用并删除相关对象
+新增对象-消亡对象阈值达到某一个零界点是才会启动垃圾回收
+>>> import gc
+>>> print(gc.get_threshold())   --查看阈值
+(700, 10, 10)
+>>> gc.isenabled()
+True
+>>> 
+
+>>> gc.collect()   --手动触发垃圾回收
+82
+>>> print(objgraph.count('Person'))
+0
+>>> print(objgraph.count('Animal'))
+0
